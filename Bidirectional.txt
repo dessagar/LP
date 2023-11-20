@@ -1,0 +1,35 @@
+import RPi.GPIO as GPIO
+from time import sleep
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(3, GPIO.IN)
+GPIO.setup(40,GPIO.IN)
+bp=8
+GPIO.setup(bp, GPIO.OUT)
+count=0
+while(True):
+	enter=GPIO.input(3)
+	exit=GPIO.input(40)
+
+	if (enter==False):
+		count+=1
+		print("Obstacle Entered")
+		print("Count: "+str(count))
+
+		GPIO.output(bp,GPIO.HIGH)
+		time.sleep(2)
+		GPIO.output(bp,GPIO.LOW)
+		time.sleep(2)
+
+	if (exit==False):
+		if (count>0):
+			count-=1
+			print("Obstacle Exited")
+			print("Count: "+str(count))
+
+			GPIO.output(bp,GPIO.HIGH)
+			time.sleep(2)
+			GPIO.output(bp,GPIO.LOW)
+			time.sleep(2)	
+		else:
+			print("No Objects")
+	sleep(1) 
